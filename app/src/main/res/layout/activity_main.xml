@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ListView
+        android:id="@+id/publish_information_list"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/publish_information_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="发布寻人信息" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
