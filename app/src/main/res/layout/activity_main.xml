@@ -7,6 +7,8 @@
     tools:context=".MainActivity">
 
     <ListView
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
         android:id="@+id/publish_information_list"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"

@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<25; i++) {
             Information information = new Information();
             information.imageURL = "test_image_url";
             information.informationText = "Text" + i;
@@ -56,11 +58,14 @@ class InformationAdapter extends ArrayAdapter<Information> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // TODO 使用ViewHolder优化性能
         View rowView = inflater.inflate(R.layout.information_item, parent, false);
         ImageView imageView = rowView.findViewById(R.id.baby_image);
         TextView textView = rowView.findViewById(R.id.baby_text);
 
-        imageView.setImageResource(R.drawable.test_baby);
+        // imageView.setImageResource(R.drawable.test_baby);
+        // 使用Picasso通过URL设置图片
+        Picasso.with(context).load("https://www-cdn.cigdata.cn/gkbf/online_test.jpg").error(R.drawable.test_baby).into(imageView);
         textView.setText(data.get(position).informationText);
         return rowView;
     }
