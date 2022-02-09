@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ListView listview = findViewById(R.id.publish_information_list);
+        listview.setOnItemClickListener((parent, view, position, id) -> {
+            Information selectedItem = (Information) parent.getItemAtPosition(position);
+            // TODO: Redirect to detail Page
+            Toast.makeText(MainActivity.this, selectedItem.informationText, Toast.LENGTH_SHORT).show();
+        });
         listview.setAdapter(new InformationAdapter(this, informationArrayList));
 
         Button publishBtn = findViewById(R.id.publish_information_btn);
