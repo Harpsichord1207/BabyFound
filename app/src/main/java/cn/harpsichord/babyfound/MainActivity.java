@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
             informationArrayList.add(information);
         }
 
-        final ListView listview = (ListView) findViewById(R.id.publish_information_list);
-        listview.setAdapter(
-                new InformationAdapter(this, informationArrayList)
-        );
+        ListView listview = findViewById(R.id.publish_information_list);
+        listview.setAdapter(new InformationAdapter(this, informationArrayList));
 
+        Button publishBtn = findViewById(R.id.publish_information_btn);
+        publishBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PublishActivity.class);
+            startActivity(intent);
+        });
 
     }
 }
