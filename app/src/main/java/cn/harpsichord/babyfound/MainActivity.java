@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Response response = client.newCall(request).execute();
                 String body = response.body().string();
+                informationArrayList.clear();
                 JsonObject jsonBody = JsonParser.parseString(body).getAsJsonObject();
                 for (JsonElement ele: jsonBody.getAsJsonArray("data")) {
                     String imageURL = ele.getAsJsonObject().get("img_url").getAsString();
@@ -89,11 +90,16 @@ public class MainActivity extends AppCompatActivity {
 
                     informationArrayList.add(information);
                 }
-                // Toast.makeText(MainActivity.this, "刷新成功，获取到" + informationArrayList.size() + "条信息", Toast.LENGTH_SHORT).show();
+                customToast("刷新成功，获取到" + informationArrayList.size() + "条信息");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    private void customToast(String content) {
+        // TODO: 默认参数Toast.LENGTH_SHORT
+        runOnUiThread(() -> Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show());
     }
 
 }
