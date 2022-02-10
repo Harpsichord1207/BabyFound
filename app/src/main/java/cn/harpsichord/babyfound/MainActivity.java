@@ -34,6 +34,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Information> informationArrayList = new ArrayList<>();
+    InformationAdapter informationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
             // TODO: Redirect to detail Page
             Toast.makeText(MainActivity.this, selectedItem.informationText, Toast.LENGTH_SHORT).show();
         });
-        InformationAdapter informationAdapter = new InformationAdapter(this, informationArrayList);
+        informationAdapter = new InformationAdapter(this, informationArrayList);
         listview.setAdapter(informationAdapter);
-        informationAdapter.notifyDataSetChanged();
+
         Button publishBtn = findViewById(R.id.publish_information_btn);
         publishBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, PublishActivity.class);
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     informationArrayList.add(information);
                 }
                 customToast("刷新成功，获取到" + informationArrayList.size() + "条信息");
+                runOnUiThread(() -> {informationAdapter.notifyDataSetChanged();});
             } catch (Exception e) {
                 e.printStackTrace();
             }
