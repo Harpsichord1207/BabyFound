@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,9 +45,11 @@ public class PublishActivity extends AppCompatActivity {
     public MapView mapView = null;
     public BaiduMap baiduMap = null;
 
-    public InputStream image = null;
+    public byte[] image = null;
 
     private final MyLocationListener myListener = new MyLocationListener();
+
+    public final String logTag = "PublishActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class PublishActivity extends AppCompatActivity {
 
         Button submitBtn = findViewById(R.id.submit_information);
         submitBtn.setOnClickListener(v -> {
+            Log.i(logTag, "Start to submit!");
             try {
                 uploadInformation();
             } catch (Exception e) {
@@ -78,6 +83,8 @@ public class PublishActivity extends AppCompatActivity {
             }
 
         });
+
+        Log.w(logTag, "Here1");
 
         mLocationClient = new LocationClient(this);
         LocationClientOption option = new LocationClientOption();
@@ -89,6 +96,7 @@ public class PublishActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(myListener);
         mLocationClient.start();
 
+        Log.w(logTag, "Here2");
     }
 
     @Override
@@ -99,12 +107,11 @@ public class PublishActivity extends AppCompatActivity {
             return;
         }
         try {
-            InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(data.getData()));
             bitmap = Bitmap.createScaledBitmap(bitmap,  400 ,400, true);
             imageView.setImageBitmap(bitmap);
-            image = inputStream;
-        } catch (FileNotFoundException e){
+            image = toByteArray(this.getContentResolver().openInputStream(data.getData()));
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -132,24 +139,20 @@ public class PublishActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void uploadInformation() throws IOException {
+    public void uploadInformation() {
+        Log.i("Upload", "Start to upload information!");
         MyLocationData locationData = baiduMap.getLocationData();
         double longitude = locationData.longitude;
         double latitude = locationData.latitude;
         String text = editText.getText().toString();
-
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        System.out.println(latitude);
-        System.out.println(longitude);
-        System.out.println(text);
-        System.out.println(image);
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        Log.i("Upload", "L: " + longitude);
 
         RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM) // What？
                 .addFormDataPart("details", text)
                 .addFormDataPart("longitude", String.valueOf(longitude))
                 .addFormDataPart("latitude", String.valueOf(latitude))
-                .addFormDataPart("FILES", "xx.jpg",  RequestBody.create(toByteArray(image)))
+                .addFormDataPart("FILES", "xx.jpg",  RequestBody.create(image))
                 .build();
 
 
@@ -162,16 +165,7 @@ public class PublishActivity extends AppCompatActivity {
             try {
                 Response response = client.newCall(request).execute();
                 // TODO: 到详情页
-
-                System.out.println("============================");
-                System.out.println(latitude);
-                System.out.println(longitude);
-                System.out.println(text);
-                System.out.println(image);
-                System.out.println(response.body().string());
-                System.out.println("============================");
-
-                customToast("发布成功！");
+                customToast("发布成功！" + response.body().string());
             } catch (Exception e) {
                 e.printStackTrace();
             }
