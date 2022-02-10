@@ -29,6 +29,14 @@
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/loc_text_view"
+        app:layout_constraintTop_toBottomOf="@id/input_text"
+        android:text="当前位置: 暂无"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/submit_information"
@@ -36,5 +44,13 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:text="提交" />
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/loc_text_view"
+        app:layout_constraintBottom_toTopOf="@id/submit_information"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
