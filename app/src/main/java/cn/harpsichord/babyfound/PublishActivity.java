@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,12 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -86,7 +93,7 @@ public class PublishActivity extends AppCompatActivity {
                             latitude(latitude).
                             longitude(longitude).build()
             );
-            runOnUiThread(() -> {locEditText.setText("走失位置：" + longitude + "/" + latitude);});
+            new Thread(() -> {latLng2Address(latLng, locEditText);}).start();
 
         });
         myListener.setFields(baiduMap, locEditText);
@@ -129,6 +136,44 @@ public class PublishActivity extends AppCompatActivity {
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener(myListener);
         mLocationClient.start();
+    }
+
+    public void latLng2Address(LatLng latLng, EditText editText) {
+        final String[] address = {"未知地点"};
+        final boolean[] getRes = {false};
+        GeoCoder geoCoder = GeoCoder.newInstance();
+        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    getRes[0] = true;
+                } else {
+                    address[0] = reverseGeoCodeResult.getAddress();
+                    getRes[0] = true;
+                }
+
+            }
+        });
+        geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng).newVersion(1).radius(100));
+
+        int i = 0;
+        while (i<=5) {
+            if (getRes[0]) {
+                break;
+            }
+            i += 1;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+
+        }
+        runOnUiThread(() -> {editText.setText("走失位置：" + address[0]);});
     }
 
     @Override
