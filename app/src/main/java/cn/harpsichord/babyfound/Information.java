@@ -1,6 +1,8 @@
 package cn.harpsichord.babyfound;
 
-public class Information {
+import java.io.Serializable;
+
+public class Information implements Serializable {
 
     public String imageURL;
     public String informationText;

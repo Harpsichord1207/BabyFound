@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         ListView listview = findViewById(R.id.publish_information_list);
         listview.setOnItemClickListener((parent, view, position, id) -> {
             Information selectedItem = (Information) parent.getItemAtPosition(position);
-            // TODO: Redirect to detail Page
-            Toast.makeText(MainActivity.this, selectedItem.informationText, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra("data", selectedItem);
+            startActivity(intent);
         });
         informationAdapter = new InformationAdapter(this, informationArrayList);
         listview.setAdapter(informationAdapter);

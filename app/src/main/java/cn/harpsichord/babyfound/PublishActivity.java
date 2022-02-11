@@ -21,6 +21,9 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -140,7 +143,7 @@ public class PublishActivity extends AppCompatActivity {
     }
 
     public void uploadInformation() {
-        Log.i("Upload", "Start to upload information!");
+        Log.w(logTag, "Start to upload information!");
         MyLocationData locationData = baiduMap.getLocationData();
         double longitude = locationData.longitude;
         double latitude = locationData.latitude;
@@ -155,18 +158,34 @@ public class PublishActivity extends AppCompatActivity {
                 .addFormDataPart("FILES", "xx.jpg",  RequestBody.create(image))
                 .build();
 
-
         Request request = new Request.Builder()
                 .url("http://52.81.88.46:8000/upload/")
                 .post(requestBody)
                 .build();
+
         OkHttpClient client = new OkHttpClient();
+        Log.w(logTag, "Start to execute...");
         new Thread(() -> {
             try {
                 Response response = client.newCall(request).execute();
-                // TODO: 到详情页
-                customToast("发布成功！" + response.body().string());
+                String respText = response.body().string();
+
+                Information information = new Information();
+                information.informationText = text;
+                information.longitude = longitude;
+                information.latitude = latitude;
+
+                JsonObject jsonBody = JsonParser.parseString(respText).getAsJsonObject();
+                for (JsonElement ele: jsonBody.getAsJsonArray("urls")) {
+                    information.imageURL = ele.getAsJsonObject().get("url").getAsString();
+                    break;
+                }
+                customToast("发布成功！");
+                Intent intent = new Intent(PublishActivity.this, DetailActivity.class);
+                intent.putExtra("data", information);
+                startActivity(intent);
             } catch (Exception e) {
+                customToast(e+"");
                 e.printStackTrace();
             }
         }).start();
@@ -181,7 +200,7 @@ public class PublishActivity extends AppCompatActivity {
     public static byte[] toByteArray(InputStream input) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         byte[] buffer = new byte[4096];
-        int n = 0;
+        int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
         }
