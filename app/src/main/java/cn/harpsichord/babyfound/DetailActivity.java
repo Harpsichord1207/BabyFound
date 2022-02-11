@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
         Button back = findViewById(R.id.detail_btn);
         back.setOnClickListener(v -> {
             Intent backIntent = new Intent(this, MainActivity.class);
+            backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(backIntent);
         });
 

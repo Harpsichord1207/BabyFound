@@ -176,6 +176,14 @@ public class PublishActivity extends AppCompatActivity {
                 information.latitude = latitude;
 
                 JsonObject jsonBody = JsonParser.parseString(respText).getAsJsonObject();
+
+                int code = jsonBody.get("code").getAsInt();
+
+                if (code != 200) {
+                    customToast("上传失败，Code " + code);
+                    return;
+                }
+
                 for (JsonElement ele: jsonBody.getAsJsonArray("urls")) {
                     information.imageURL = ele.getAsJsonObject().get("url").getAsString();
                     break;
