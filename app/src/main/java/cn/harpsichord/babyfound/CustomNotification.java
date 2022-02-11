@@ -16,10 +16,8 @@ public class CustomNotification {
     public static void init(Context context) {
         if (notificationManager == null) {
             notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            createChannel();
         }
-
-        createChannel();
-
     }
 
     private static void createChannel() {

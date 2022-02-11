@@ -89,12 +89,14 @@ public class MainActivity extends AppCompatActivity {
                 informationArrayList.clear();
                 JsonObject jsonBody = JsonParser.parseString(body).getAsJsonObject();
                 for (JsonElement ele: jsonBody.getAsJsonArray("data")) {
+                    int id = ele.getAsJsonObject().get("id").getAsInt();
                     String imageURL = ele.getAsJsonObject().get("img_url").getAsString();
                     String text = ele.getAsJsonObject().get("img_details").getAsString();
                     double longitude = ele.getAsJsonObject().get("img_longitude").getAsDouble();
                     double latitude = ele.getAsJsonObject().get("img_latitude").getAsDouble();
 
                     Information information = new Information();
+                    information.id = id;
                     information.informationText = text;
                     information.imageURL = imageURL;
                     information.longitude = longitude;
@@ -102,8 +104,18 @@ public class MainActivity extends AppCompatActivity {
 
                     informationArrayList.add(information);
                 }
-                customToast("刷新成功，获取到" + informationArrayList.size() + "条信息");
-                runOnUiThread(() -> {informationAdapter.notifyDataSetChanged();});
+
+                runOnUiThread(() -> {
+                    CustomAPP app = (CustomAPP) getApplication();
+                    for (Information information: informationArrayList) {
+                        app.globalInformationSet.add(information.id);
+                    }
+                    informationAdapter.notifyDataSetChanged();
+                    Toast.makeText(
+                            MainActivity.this,
+                            "刷新成功，获取到" + informationArrayList.size() + "/" + app.globalInformationSet.size() + "条信息",
+                            Toast.LENGTH_SHORT).show();
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
