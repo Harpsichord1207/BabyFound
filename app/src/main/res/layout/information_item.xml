@@ -10,6 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/icon_border"
+        android:scaleType="centerCrop"
         android:id="@+id/baby_image" />
 
     <TextView

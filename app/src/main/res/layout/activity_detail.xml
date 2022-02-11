@@ -12,6 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="3dp"
+        android:scaleType="centerCrop"
         android:layout_width="300dp"
         android:layout_height="300dp" />
 
