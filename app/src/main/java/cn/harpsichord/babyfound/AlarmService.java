@@ -55,6 +55,7 @@ public class AlarmService extends Service {
                         information.latitude = latitude;
 
                         if (!app.globalInformationSet.contains(id)) {
+                            app.globalInformationSet.add(id);
                             CustomNotification.send(information, AlarmService.this);
                             break;
                         }

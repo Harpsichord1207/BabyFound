@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -129,30 +130,60 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
-class InformationAdapter extends ArrayAdapter<Information> {
+class InformationAdapter extends BaseAdapter {
 
     Context context;
     List<Information> data;
+    LayoutInflater inflater;
 
     public InformationAdapter(Context context, List<Information> data) {
-        super(context, -1, data);
         this.context = context;
         this.data = data;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    // 原来这个ViewHolder是要自己定义的？
+    private static class ViewHolder {
+        ImageView imageView;
+        TextView textView;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        // TODO 使用ViewHolder优化性能
-        View rowView = inflater.inflate(R.layout.information_item, parent, false);
-        ImageView imageView = rowView.findViewById(R.id.baby_image);
-        TextView textView = rowView.findViewById(R.id.baby_text);
+
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.information_item, parent, false);
+            viewHolder.imageView = convertView.findViewById(R.id.baby_image);
+            viewHolder.textView = convertView.findViewById(R.id.baby_text);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         // imageView.setImageResource(R.drawable.test_baby);
         // 使用Picasso通过URL设置图片
         Information information = data.get(position);
-        Picasso.with(context).load(information.imageURL).error(R.drawable.test_baby).into(imageView);
-        textView.setText(information.informationText);
-        return rowView;
+        Picasso.with(context).load(information.imageURL).error(R.drawable.test_baby).into(viewHolder.imageView);
+        viewHolder.textView.setText(information.informationText);
+        return convertView;
     }
 
 }
