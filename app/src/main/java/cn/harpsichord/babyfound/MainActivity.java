@@ -67,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
             getAllInformation();
         });
 
-        CustomNotification.init(this);
-        Information testI = new Information();
-        testI.informationText = "test note!";
-        CustomNotification.send(testI, this);
+//        CustomNotification.init(this);
+//        Information testI = new Information();
+//        testI.informationText = "test note!";
+//        CustomNotification.send(testI, this);
+
+        Intent bIntent = new Intent(this, AlarmService.class);
+        startService(bIntent);
     }
 
     public void getAllInformation() {
