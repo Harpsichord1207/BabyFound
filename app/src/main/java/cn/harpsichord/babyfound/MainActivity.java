@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Information information = new Information();
                     information.id = id;
-                    information.informationText = text;
+                    information.detail = new Information.Detail(text);
                     information.imageURL = imageURL;
                     information.longitude = longitude;
                     information.latitude = latitude;
@@ -182,27 +182,7 @@ class InformationAdapter extends BaseAdapter {
         // 使用Picasso通过URL设置图片
         Information information = data.get(position);
         Picasso.with(context).load(information.imageURL).error(R.drawable.test_baby).into(viewHolder.imageView);
-        String displayText = "";
-        int i = 0;
-        for (String part: information.informationText.split("\\*#\\*")) {
-            i += 1;
-            String prefix;
-            if (i == 1) {
-                prefix = "姓名：";
-            } else if (i == 2) {
-                prefix = "描述：";
-            } else if (i == 3) {
-                prefix = "走失时间：";
-            } else {
-                prefix = "";
-            }
-            String thisLine = prefix + part;
-            if (thisLine.length() > 15) {
-                thisLine = thisLine.substring(0, 12) + "...";
-            }
-            displayText += thisLine + "\n";
-        }
-        viewHolder.textView.setText(displayText);
+        viewHolder.textView.setText(information.getDetailDisplay());
         return convertView;
     }
 

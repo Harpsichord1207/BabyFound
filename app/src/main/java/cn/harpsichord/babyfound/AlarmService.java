@@ -54,7 +54,7 @@ public class AlarmService extends Service {
 
                         Information information = new Information();
                         information.id = id;
-                        information.informationText = text;
+                        information.detail = new Information.Detail(text);
                         information.imageURL = imageURL;
                         information.longitude = longitude;
                         information.latitude = latitude;

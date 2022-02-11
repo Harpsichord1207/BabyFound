@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -13,12 +14,17 @@
         android:scaleType="centerCrop"
         android:id="@+id/baby_image" />
 
-    <TextView
+<!--    https://stackoverflow.com/questions/9049086/listview-with-horizontalscrollview-onitemclick-not-working-->
+    <HorizontalScrollView android:layout_width="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:id="@+id/baby_text" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:scrollHorizontally="true"
+            android:id="@+id/baby_text" />
+    </HorizontalScrollView>
 
 </LinearLayout>

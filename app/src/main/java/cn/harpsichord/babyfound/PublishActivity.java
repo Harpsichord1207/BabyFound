@@ -52,6 +52,7 @@ public class PublishActivity extends AppCompatActivity {
     public EditText nameEditText;
     public EditText detailEditText;
     public EditText timeEditText;
+    public EditText contactEditText;
     public EditText locEditText;
 
     public byte[] image = null;
@@ -70,6 +71,7 @@ public class PublishActivity extends AppCompatActivity {
         timeEditText = findViewById(R.id.input_text_time);
         SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINESE);
         timeEditText.setText(df.format(new Date()));
+        contactEditText = findViewById(R.id.input_text_contact);
         locEditText = findViewById(R.id.input_text_loc);
 
         mapView = findViewById(R.id.bmapView);
@@ -164,13 +166,14 @@ public class PublishActivity extends AppCompatActivity {
         String detail = detailEditText.getText().toString();
         String date = timeEditText.getText().toString();
         String address = locEditText.getText().toString();
+        String contact = contactEditText.getText().toString();
 
-        if (name.trim().length() == 0 || detail.trim().length() == 0 || date.trim().length() == 0 || address.trim().length() == 0) {
+        if (name.trim().length() == 0 || detail.trim().length() == 0 || date.trim().length() == 0 || address.trim().length() == 0 || contact.trim().length() == 0) {
             customToast("存在未填写的字段！");
             return;
         }
 
-        String text = name + "*#*" + detail + "*#*" + date + "*#*" + address;
+        String text = name + "*#*" + detail + "*#*" + date + "*#*" + contact + "*#*" + address;
 
         Log.i("Upload", "L: " + longitude);
 
@@ -195,7 +198,7 @@ public class PublishActivity extends AppCompatActivity {
                 String respText = response.body().string();
 
                 Information information = new Information();
-                information.informationText = text;
+                information.detail = new Information.Detail(text);
                 information.longitude = longitude;
                 information.latitude = latitude;
 

@@ -31,7 +31,7 @@
         android:id="@+id/input_text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:hint="姓名"
         app:layout_constraintTop_toBottomOf="@id/select_image_btn" />
 
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:hint="详情"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/input_text_time"
@@ -49,15 +49,23 @@
         android:layout_width="match_parent"
         android:hint="走失时间"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/input_text_contact"
+        app:layout_constraintTop_toBottomOf="@id/input_text_time"
+        android:layout_width="match_parent"
+        android:hint="联系方式"
+        android:layout_height="wrap_content"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/input_text_loc"
-        app:layout_constraintTop_toBottomOf="@id/input_text_time"
+        app:layout_constraintTop_toBottomOf="@id/input_text_contact"
         android:layout_width="match_parent"
         android:enabled="false"
         android:layout_height="wrap_content"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"

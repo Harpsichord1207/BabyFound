@@ -37,7 +37,7 @@ public class CustomNotification {
         Notification notification = new Notification.Builder(context, CHANNEL_ID)
                  .setAutoCancel(true)
                 .setContentTitle("寻人启事")
-                .setContentText(information.informationText)
+                .setContentText("走失人员：" + information.detail.name)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.test_baby)
                 .setContentIntent(pendingIntent)

@@ -27,28 +27,15 @@ public class DetailActivity extends AppCompatActivity {
         TextView nameText = findViewById(R.id.detail_text_name);
         TextView detailText = findViewById(R.id.detail_text_detail);
         TextView dateText = findViewById(R.id.detail_text_date);
+        TextView contactText = findViewById(R.id.detail_text_contact);
         TextView addressText = findViewById(R.id.detail_text_address);
         TextView posText = findViewById(R.id.detail_pos);
 
-        int i = 0;
-
-        for (String part: information.informationText.split("\\*#\\*")) {
-            i += 1;
-            String prefix;
-            if (i == 1) {
-                prefix = "姓名：";
-                nameText.setText(prefix + part);
-            } else if (i == 2) {
-                prefix = "描述：";
-                detailText.setText(prefix + part);
-            } else if (i == 3) {
-                prefix = "走失时间：";
-                dateText.setText(prefix + part);
-            } else {
-                prefix = "";
-                addressText.setText(prefix + part);
-            }
-        }
+        nameText.setText(information.getName());
+        detailText.setText(information.getDetail());
+        dateText.setText(information.getDate());
+        contactText.setText(information.getContact());
+        addressText.setText(information.getAddress());
 
         posText.setText("坐标：" + information.longitude + "/" + information.latitude);
 
