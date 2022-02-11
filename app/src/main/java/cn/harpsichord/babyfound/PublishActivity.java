@@ -41,12 +41,15 @@ import okhttp3.Response;
 public class PublishActivity extends AppCompatActivity {
 
     public ImageView imageView;
-    public EditText locTextView;
-    public EditText editText;
 
     public LocationClient mLocationClient = null;
     public MapView mapView = null;
     public BaiduMap baiduMap = null;
+
+    public EditText nameEditText;
+    public EditText detailEditText;
+    public EditText timeEditText;
+    public EditText locEditText;
 
     public byte[] image = null;
 
@@ -59,12 +62,15 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
 
-        editText = findViewById(R.id.input_text_detail);
+        nameEditText = findViewById(R.id.input_text_name);
+        detailEditText = findViewById(R.id.input_text_detail);
+        timeEditText = findViewById(R.id.input_text_time);
+        locEditText = findViewById(R.id.input_text_loc);
+
         mapView = findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
-        locTextView = findViewById(R.id.input_text_loc);
-        myListener.setFields(baiduMap, locTextView);
+        myListener.setFields(baiduMap, locEditText);
 
         Button selectImageBtn = findViewById(R.id.select_image_btn);
         selectImageBtn.setOnClickListener(v -> {
@@ -82,6 +88,7 @@ public class PublishActivity extends AppCompatActivity {
             try {
                 uploadInformation();
             } catch (Exception e) {
+                customToast("上传失败：" + e);
                 e.printStackTrace();
             }
 
@@ -147,7 +154,19 @@ public class PublishActivity extends AppCompatActivity {
         MyLocationData locationData = baiduMap.getLocationData();
         double longitude = locationData.longitude;
         double latitude = locationData.latitude;
-        String text = editText.getText().toString();
+
+        String name = nameEditText.getText().toString();
+        String detail = detailEditText.getText().toString();
+        String date = timeEditText.getText().toString();
+        String address = locEditText.getText().toString();
+
+        if (name.trim().length() == 0 || detail.trim().length() == 0 || date.trim().length() == 0 || address.trim().length() == 0) {
+            customToast("存在未填写的字段！");
+            return;
+        }
+
+        String text = name + "*#*" + detail + "*#*" + date + "*#*" + address;
+
         Log.i("Upload", "L: " + longitude);
 
         RequestBody requestBody = new MultipartBody.Builder()

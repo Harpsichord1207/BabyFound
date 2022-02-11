@@ -7,6 +7,7 @@
     tools:context=".PublishActivity">
 
     <ImageView
+        android:src="@drawable/wait_upload"
         android:layout_marginTop="5dp"
         android:id="@+id/selected_image"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,7 @@
         android:id="@+id/input_text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:hint="姓名"
         app:layout_constraintTop_toBottomOf="@id/select_image_btn" />
 
@@ -40,7 +41,7 @@
         android:layout_width="match_parent"
         android:hint="详情"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/input_text_time"
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:hint="走失时间"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/input_text_loc"
@@ -56,7 +57,7 @@
         android:layout_width="match_parent"
         android:enabled="false"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
