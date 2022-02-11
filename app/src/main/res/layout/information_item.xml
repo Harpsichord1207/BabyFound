@@ -5,9 +5,11 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/icon_border"
         android:id="@+id/baby_image" />
 
     <TextView
@@ -15,7 +17,7 @@
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:id="@+id/baby_text" />
 
 </LinearLayout>

@@ -63,7 +63,7 @@ public class PublishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_publish);
 
         nameEditText = findViewById(R.id.input_text_name);
-        detailEditText = findViewById(R.id.input_text_detail);
+        detailEditText = findViewById(R.id.input_text_detail); // TOOD: 默认设置为当前时间
         timeEditText = findViewById(R.id.input_text_time);
         locEditText = findViewById(R.id.input_text_loc);
 
@@ -251,7 +251,7 @@ class MyLocationListener extends BDAbstractLocationListener {
                         longitude(location.getLongitude()).build()
         );
 
-        editText.setText("当前位置：" + location.getAddrStr());
+        editText.setText("走失位置：" + location.getAddrStr());
 
     }
 
