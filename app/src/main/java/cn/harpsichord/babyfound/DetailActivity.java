@@ -26,10 +26,10 @@ public class DetailActivity extends AppCompatActivity {
 
 
         TextView text = findViewById(R.id.detail_text);
-        text.setText(information.informationText);
+        text.setText("详情：" + information.informationText);
 
         TextView pos = findViewById(R.id.detail_pos);
-        pos.setText("坐标：" + information.longitude + "/" + information.latitude);
+        pos.setText("坐标：东经" + information.longitude + "/北纬" + information.latitude);
 
         Button back = findViewById(R.id.detail_btn);
         back.setOnClickListener(v -> {

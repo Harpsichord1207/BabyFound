@@ -29,6 +29,11 @@ public class AlarmService extends Service {
             @Override
             public void run() {
                 CustomAPP app = (CustomAPP) getApplication();
+                if (app.globalInformationSet.isEmpty()) {
+                    // 第一次启动这个还是空的 也不用提醒
+                    return;
+                }
+
                 CustomNotification.init(AlarmService.this);
 
                 Request request = new Request.Builder()
