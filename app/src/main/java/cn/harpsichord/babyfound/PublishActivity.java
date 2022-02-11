@@ -41,7 +41,7 @@ import okhttp3.Response;
 public class PublishActivity extends AppCompatActivity {
 
     public ImageView imageView;
-    public TextView locTextView;
+    public EditText locTextView;
     public EditText editText;
 
     public LocationClient mLocationClient = null;
@@ -59,11 +59,11 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
 
-        editText = findViewById(R.id.input_text);
+        editText = findViewById(R.id.input_text_detail);
         mapView = findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
-        locTextView = findViewById(R.id.loc_text_view);
+        locTextView = findViewById(R.id.input_text_loc);
         myListener.setFields(baiduMap, locTextView);
 
         Button selectImageBtn = findViewById(R.id.select_image_btn);
@@ -220,7 +220,7 @@ public class PublishActivity extends AppCompatActivity {
 class MyLocationListener extends BDAbstractLocationListener {
 
     private BaiduMap baiduMap;
-    private TextView textView;
+    private EditText editText;
 
     @Override
     public void onReceiveLocation(BDLocation location){
@@ -232,13 +232,13 @@ class MyLocationListener extends BDAbstractLocationListener {
                         longitude(location.getLongitude()).build()
         );
 
-        textView.setText("当前位置：" + location.getAddrStr());
+        editText.setText("当前位置：" + location.getAddrStr());
 
     }
 
-    public void setFields(BaiduMap baiduMap, TextView textView) {
+    public void setFields(BaiduMap baiduMap, EditText textView) {
         this.baiduMap = baiduMap;
-        this.textView = textView;
+        this.editText = textView;
     }
 
 

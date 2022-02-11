@@ -6,51 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".PublishActivity">
 
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:id="@+id/selected_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
     <Button
         android:id="@+id/select_image_btn"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/selected_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:text="选择照片"
-        android:textSize="24sp"
-        android:layout_width="match_parent"
+        android:textSize="18sp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content" />
-
-    <ImageView
-        app:layout_constraintTop_toBottomOf="@id/select_image_btn"
-        android:id="@+id/selected_image"
+    
+    <EditText
+        android:id="@+id/input_text_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="姓名"
+        app:layout_constraintTop_toBottomOf="@id/select_image_btn" />
 
     <EditText
-        android:id="@+id/input_text"
-        app:layout_constraintTop_toBottomOf="@id/selected_image"
+        android:id="@+id/input_text_detail"
+        app:layout_constraintTop_toBottomOf="@id/input_text_name"
         android:layout_width="match_parent"
-        android:hint="请输入走失儿童信息"
+        android:hint="详情"
         android:layout_height="wrap_content"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/loc_text_view"
-        app:layout_constraintTop_toBottomOf="@id/input_text"
-        android:text="当前位置: 暂无"
-        android:textSize="24sp"
+    <EditText
+        android:id="@+id/input_text_time"
+        app:layout_constraintTop_toBottomOf="@id/input_text_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/submit_information"
-        android:layout_width="match_parent"
+        android:hint="走失时间"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:text="提交" />
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/input_text_loc"
+        app:layout_constraintTop_toBottomOf="@id/input_text_time"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@id/loc_text_view"
-        app:layout_constraintBottom_toTopOf="@id/submit_information"
+        app:layout_constraintTop_toBottomOf="@id/input_text_loc"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="200dp" />
+
+    <Button
+        android:id="@+id/submit_information"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="发布"
+        android:textSize="18sp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
