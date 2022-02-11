@@ -11,11 +11,11 @@
         android:id="@+id/baby_image" />
 
     <TextView
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="8dp"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:id="@+id/baby_text" />
 
 </LinearLayout>
