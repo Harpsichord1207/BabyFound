@@ -21,6 +21,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -77,6 +78,17 @@ public class PublishActivity extends AppCompatActivity {
         mapView = findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
+        baiduMap.setOnMapLongClickListener(latLng -> {
+            double latitude = latLng.latitude;
+            double longitude = latLng.longitude;
+            baiduMap.setMyLocationData(
+                    new MyLocationData.Builder().
+                            latitude(latitude).
+                            longitude(longitude).build()
+            );
+            runOnUiThread(() -> {locEditText.setText("走失位置：" + longitude + "/" + latitude);});
+
+        });
         myListener.setFields(baiduMap, locEditText);
 
         Button selectImageBtn = findViewById(R.id.select_image_btn);
@@ -101,19 +113,22 @@ public class PublishActivity extends AppCompatActivity {
 
         });
 
-        Log.w(logTag, "Here1");
+        Button resetBtn = findViewById(R.id.reset_location);
+        resetBtn.setOnClickListener(v -> {
+            locate();
+        });
+        locate();
+    }
 
+    public void locate() {
         mLocationClient = new LocationClient(this);
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener(myListener);
         mLocationClient.start();
-
-        Log.w(logTag, "Here2");
     }
 
     @Override
@@ -149,7 +164,7 @@ public class PublishActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mLocationClient.start();
+        mLocationClient.stop();
         baiduMap.setMyLocationEnabled(false);
         mapView.onDestroy();
         mapView = null;

@@ -75,14 +75,28 @@
         android:layout_height="200dp" />
 
     <Button
+        android:id="@+id/reset_location"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/submit_information"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintWidth_percent="0.5"
+        android:text="还原定位" />
+
+    <Button
         android:id="@+id/submit_information"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="发布"
+        app:layout_constraintLeft_toRightOf="@id/reset_location"
+        app:layout_constraintWidth_percent="0.5"
+        android:text="发布信息"
         android:textSize="18sp"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
