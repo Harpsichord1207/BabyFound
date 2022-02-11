@@ -2,9 +2,11 @@ package cn.harpsichord.babyfound;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
             getAllInformation();
         });
 
+        CustomNotification.init(this);
+        Information testI = new Information();
+        testI.informationText = "test note!";
+        CustomNotification.send(testI, this);
     }
 
     public void getAllInformation() {

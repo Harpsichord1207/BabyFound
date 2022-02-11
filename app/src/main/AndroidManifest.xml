@@ -29,11 +29,13 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
+        
+        <receiver android:name=".NotificationClickReceiver" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="zklElbLbfMnSPGfg1MxYkSiyjIAlQgoK"></meta-data>
+            android:value="zklElbLbfMnSPGfg1MxYkSiyjIAlQgoK" />
 
         <activity
             android:name=".PublishActivity"
