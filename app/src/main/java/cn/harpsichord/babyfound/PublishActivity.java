@@ -30,6 +30,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.FormBody;
 import okhttp3.MultipartBody;
@@ -63,8 +66,10 @@ public class PublishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_publish);
 
         nameEditText = findViewById(R.id.input_text_name);
-        detailEditText = findViewById(R.id.input_text_detail); // TOOD: 默认设置为当前时间
+        detailEditText = findViewById(R.id.input_text_detail);
         timeEditText = findViewById(R.id.input_text_time);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINESE);
+        timeEditText.setText(df.format(new Date()));
         locEditText = findViewById(R.id.input_text_loc);
 
         mapView = findViewById(R.id.bmapView);
