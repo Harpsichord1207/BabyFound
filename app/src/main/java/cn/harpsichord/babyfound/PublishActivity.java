@@ -5,14 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -34,15 +31,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import okhttp3.FormBody;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,6 +45,7 @@ import okhttp3.Response;
 
 public class PublishActivity extends AppCompatActivity {
 
+    public CustomAPP app;
     public ImageView imageView;
 
     public LocationClient mLocationClient = null;
@@ -73,6 +68,7 @@ public class PublishActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        app = (CustomAPP) getApplication();
 
         nameEditText = findViewById(R.id.input_text_name);
         detailEditText = findViewById(R.id.input_text_detail);
@@ -96,7 +92,7 @@ public class PublishActivity extends AppCompatActivity {
             new Thread(() -> {latLng2Address(latLng, locEditText);}).start();
 
         });
-        myListener.setFields(baiduMap, locEditText);
+        myListener.setFields(baiduMap, locEditText, app);
 
         Button selectImageBtn = findViewById(R.id.select_image_btn);
         selectImageBtn.setOnClickListener(v -> {
@@ -308,6 +304,7 @@ class MyLocationListener extends BDAbstractLocationListener {
 
     private BaiduMap baiduMap;
     private EditText editText;
+    private CustomAPP app;
 
     @Override
     public void onReceiveLocation(BDLocation location){
@@ -318,14 +315,16 @@ class MyLocationListener extends BDAbstractLocationListener {
                         latitude(location.getLatitude()).
                         longitude(location.getLongitude()).build()
         );
-
+        app.longitude = location.getLongitude();
+        app.latitude = location.getLatitude();
         editText.setText("走失位置：" + location.getAddrStr());
 
     }
 
-    public void setFields(BaiduMap baiduMap, EditText textView) {
+    public void setFields(BaiduMap baiduMap, EditText textView, CustomAPP app) {
         this.baiduMap = baiduMap;
         this.editText = textView;
+        this.app = app;
     }
 
 

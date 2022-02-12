@@ -61,7 +61,12 @@ public class AlarmService extends Service {
 
                         if (!app.globalInformationSet.contains(id)) {
                             app.globalInformationSet.add(id);
-                            CustomNotification.send(information, AlarmService.this);
+
+                            // 在一定范围内才通知
+                            if ((app.longitude != 0 && app.latitude != 0) && (Math.abs(longitude - app.longitude) < 0.1 && Math.abs(latitude - app.latitude) < 0.1)) {
+                                CustomNotification.send(information, AlarmService.this);
+                            }
+
                             break;
                         }
 
