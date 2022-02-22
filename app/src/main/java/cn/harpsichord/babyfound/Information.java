@@ -1,5 +1,7 @@
 package cn.harpsichord.babyfound;
 
+import android.content.res.Resources;
+
 import java.io.Serializable;
 
 public class Information implements Serializable {
