@@ -6,6 +6,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        Vibrator vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         Intent intent = getIntent();
         Information information = (Information) intent.getSerializableExtra("data");
@@ -44,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
             }
             // clipboardManager.setText(contactString);
             clipboardManager.setPrimaryClip(ClipData.newPlainText(null, contactString));
+            vibrator.vibrate(VibrationEffect.createOneShot(50, 192));
             Toast.makeText(DetailActivity.this, "已复制: " + contactString, Toast.LENGTH_SHORT).show();
             return false;
         });
