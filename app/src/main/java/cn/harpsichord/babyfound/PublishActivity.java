@@ -63,6 +63,7 @@ public class PublishActivity extends AppCompatActivity {
     private final MyLocationListener myListener = new MyLocationListener();
 
     public final String logTag = "PublishActivity";
+    private static final String Host = "www.example.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,7 +243,7 @@ public class PublishActivity extends AppCompatActivity {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://52.81.88.46:8000/upload/")
+                .url("http://" + Host + "/upload/")
                 .post(requestBody)
                 .build();
 

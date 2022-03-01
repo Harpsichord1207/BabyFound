@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Information> informationArrayList = new ArrayList<>();
     InformationAdapter informationAdapter;
+    private static final String Host = "www.example.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +69,13 @@ public class MainActivity extends AppCompatActivity {
             getAllInformation();
         });
 
-//        CustomNotification.init(this);
-//        Information testI = new Information();
-//        testI.informationText = "test note!";
-//        CustomNotification.send(testI, this);
-
         Intent bIntent = new Intent(this, AlarmService.class);
         startService(bIntent);
     }
 
     public void getAllInformation() {
         Request request = new Request.Builder()
-                .url("http://52.81.88.46:8000/get_all/")
+                .url("http://" + Host + "/get_all/")
                 .get()
                 .build();
         OkHttpClient client = new OkHttpClient();
